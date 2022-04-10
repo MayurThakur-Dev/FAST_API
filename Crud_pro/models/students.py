@@ -1,8 +1,10 @@
-from Crud_pro.config.db import meta
+from sqlalchemy import create_engine,MetaData
 from sqlalchemy import Table,Column
 from sqlalchemy.sql.sqltypes import Integer,String
 
-
+engine=create_engine('mysql+pymysql://root:MayurT24#@localhost:3306/py_crud')
+con=engine.connect()
+meta= MetaData()
 students=Table(
     'students',meta,
     Column('id',Integer,primary_key=True),
@@ -11,3 +13,4 @@ students=Table(
     Column('age',String(255)),
     Column('country',String(255)),
 )
+meta.create_all(engine)

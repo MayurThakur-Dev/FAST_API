@@ -45,9 +45,15 @@
 
 from fastapi import FastAPI
 from schemas.student import Student
-from config.db import con
-from Crud_pro.models.students import students
+from models.students import students,con
 app=FastAPI()
+
+@app.get('/')
+def home():
+    return {
+        "type": 'Home page',
+        "msg":'helloworld'
+    }
 
 # best way to make api
 @app.get('/api/students')
@@ -60,7 +66,7 @@ async def index():
 
 # insert data
 @app.post('/api/students')
-async def store(student:Student):
+def store(student:Student):
     data=con.execute(students.insert().values(
         name=student.name,
         email=student.email,
